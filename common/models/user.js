@@ -1,6 +1,12 @@
 'use strict';
 
 module.exports = function (user) {
+  // validations
+  user.validatesPresenceOf('username', 'email');
+  user.validatesFormatOf('username', {with: /\w+/, message: 'username has to be alphanumeric and underscores'});
+  user.validatesLengthOf('username', {min: 5, message: {min: 'Username is too short'}});
+  user.validatesLengthOf('password', {min: 6, message: {min: 'Password is too short'}});
+  user.validatesUniquenessOf('email', {message: 'email is not unique'});
 
   const querystring = require('querystring');
   const request = require('request-promise-native');
