@@ -3,6 +3,11 @@
   "plural": "users",
   "base": "User",
   "properties": {
+    "id": {
+      "type": "string",
+      "id": true,
+      "defaultFn": "uuidv4"
+    },
     "phoneToken": {
       "type": "string",
       "required": false
