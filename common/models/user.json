@@ -2,6 +2,13 @@
   "name": "user",
   "plural": "users",
   "base": "User",
+  "mixins": {
+    "PhoneNumber": true,
+    "TimeStamp": true
+  },
+  "hidden": [
+    "phoneToken"
+  ],
   "properties": {
     "id": {
       "type": "string",
@@ -13,44 +20,55 @@
       "required": false
     }
   },
-  "mixins": {
-    "PhoneNumber": true,
-    "TimeStamp" : true
-  },
   "validations": [],
-  "hidden": ["phoneToken"],
   "relations": {},
-  "acls": [{
-    "accessType": "EXECUTE",
-    "principalType": "ROLE",
-    "principalId": "$everyone",
-    "permission": "ALLOW",
-    "property": "authAccountKit"
-  }],
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "authAccountKit"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "find"
+    }
+  ],
   "methods": {
     "authAccountKit": {
-      "accepts": [{
-        "arg": "code",
-        "type": "string",
-        "required": true,
-        "description": "This string contains an authorization code from AccountKit."
-      }, {
-        "arg": "csrf",
-        "type": "string",
-        "required": true,
-        "description": "This string contains the csrf token prevent CSRF attack."
-      }],
-      "returns": [{
-        "arg": "phoneToken",
-        "type": "string",
-        "root": false,
-        "description": "This string contains the JWT with the Account ID information from AccountKit."
-      }],
+      "accepts": [
+        {
+          "arg": "code",
+          "type": "string",
+          "required": true,
+          "description": "This string contains an authorization code from AccountKit."
+        },
+        {
+          "arg": "csrf",
+          "type": "string",
+          "required": true,
+          "description": "This string contains the csrf token prevent CSRF attack."
+        }
+      ],
+      "returns": [
+        {
+          "arg": "phoneToken",
+          "type": "string",
+          "root": false,
+          "description": "This string contains the JWT with the Account ID information from AccountKit."
+        }
+      ],
       "description": "Authentication with Account Kit",
-      "http": [{
-        "path": "/authAccountKit",
-        "verb": "post"
-      }]
+      "http": [
+        {
+          "path": "/authAccountKit",
+          "verb": "post"
+        }
+      ]
     }
   }
 }

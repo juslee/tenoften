@@ -38,6 +38,7 @@
     "public": false
   },
   "user": {
-    "dataSource": "db"
+    "dataSource": "db",
+    "public": true
   }
 }
