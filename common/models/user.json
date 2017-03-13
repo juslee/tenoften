@@ -1,0 +1,50 @@
+{
+  "name": "user",
+  "plural": "users",
+  "base": "User",
+  "properties": {
+    "phoneToken": {
+      "type": "string",
+      "required": false
+    }
+  },
+  "mixins": {
+    "PhoneNumber": true
+  },
+  "validations": [],
+  "hidden": ["phoneToken"],
+  "relations": {},
+  "acls": [{
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$everyone",
+    "permission": "ALLOW",
+    "property": "authAccountKit"
+  }],
+  "methods": {
+    "authAccountKit": {
+      "accepts": [{
+        "arg": "code",
+        "type": "string",
+        "required": true,
+        "description": "This string contains an authorization code from AccountKit."
+      }, {
+        "arg": "csrf",
+        "type": "string",
+        "required": true,
+        "description": "This string contains the csrf token prevent CSRF attack."
+      }],
+      "returns": [{
+        "arg": "phoneToken",
+        "type": "string",
+        "root": false,
+        "description": "This string contains the JWT with the Account ID information from AccountKit."
+      }],
+      "description": "Authentication with Account Kit",
+      "http": [{
+        "path": "/authAccountKit",
+        "verb": "post"
+      }]
+    }
+  }
+}
