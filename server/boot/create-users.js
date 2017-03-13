@@ -7,7 +7,8 @@ module.exports = function(app) {
   const Team = app.models.Team;
 
   User.create([
-      {username: 'John', email: 'john@doe.com', password: 'opensesame'}
+    // TODO: move administrator user data to environment.js
+    {username: 'administrator', email: 'admin@tenoften.com', password: 'opensesame'}
   ], function(err, users) {
     if (err) throw err;
 
@@ -20,7 +21,7 @@ module.exports = function(app) {
 
       console.log('Created role:', role);
 
-      // Make Bob an admin
+      // Attach user administrator with admin role
       role.principals.create({
         principalType: RoleMapping.USER,
         principalId: users[0].id
